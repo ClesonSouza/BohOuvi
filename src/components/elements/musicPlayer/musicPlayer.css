@@ -1,0 +1,101 @@
+.playerMusic {
+    bottom: 0;
+    border: 4px solid var(--cor-borda);
+    border-radius: 5px;
+    box-shadow: 0 0 15px 2px var(--cor-borda);
+    transition: box-shadow 0.3s ease-in-out;
+    padding: 0px 0px 10px 30px;
+    color: white;
+    z-index: 1000;
+    position: relative;
+    margin: 20px;
+    width: calc(100% - 118px);
+    margin-top: 5px;
+}
+
+.playerCard {
+    width: calc(100% - 65px);
+    background-color: rgba(126, 151, 177, 0.1);
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 5px;
+    accent-color: rgb(0, 183, 255);
+    box-shadow: 0 0 15px 2px rgb(0, 183, 255);
+    outline: none;
+}
+
+.trackDuration {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.trackDuration > p {
+    font-size: 13px;
+    font-weight: 500;
+    color: white;
+    margin: 0;
+}
+
+.control {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-height: 1024px) and (max-width: 1366px){
+    .playerCard {
+        padding: 0.4rem;
+    }
+
+    .playerCard button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .playerMusic h3 {
+        width: 650px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 18.5px;
+        line-height: 1.2;
+    }
+
+    .playerMusic h3 * {
+        font-size: inherit;
+    }
+
+    .playerMusic h4 {
+        line-height: 1.15;
+        font-size: 18px;
+
+    }
+    .playerMusic h4 * {
+        font-size: inherit;
+    }
+}
+
+@media (max-width: 480px) {
+    .playerMusic {
+        position: absolute;
+        width: calc(100% - 116px);
+        margin-left: 40px;
+        margin-bottom: 30px;
+        font-size: 13px;
+    }
+    .playerCard {
+        width: calc(100% - 45px);
+    }
+
+    h4 {
+        margin-top: -10px;
+        margin-bottom: 3px;
+        font-size: 16px;
+    }
+}
