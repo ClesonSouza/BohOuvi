@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 /server/node_modules/
+/assets
+/dependencies
+/downloadLog
 /.pnp
 .pnp.js
 
