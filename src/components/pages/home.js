@@ -13,9 +13,9 @@ function Home() {
         <p class="footer-title">Boh Ouvi <span>v1.0</span></p>
         <p class="footer-copy">© 2026</p>
         <div class="footer-links">
-          <a href="#">GitHub</a>
+          <a href="https://github.com/ClesonSouza/" target="_blank" rel="noopener noreferrer">GitHub</a>
           <span>•</span>
-          <a href="#">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/jo%C3%A3o-guilherme-aguillera-oliveira-aa133a3b5/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
       </footer>
     </div>
