@@ -16,7 +16,7 @@ function Playlists() {
   const [baseData, setBaseData] = useState([]);
   const [music, setMusic] = useState({});
   const [volume, setVolume] = useState(() => { const v = parseFloat(localStorage.getItem("localVolume")); return isNaN(v) ? 1 : v; });
-  const [volumeBkp, setVolumeBkp] = useState(() => { const v = parseFloat(localStorage.getItem("localVolumeBkp")); return isNaN(v) ? 1 : v; });  
+  const [volumeBkp, setVolumeBkp] = useState(() => { const v = parseFloat(localStorage.getItem("localVolumeBkp")); return isNaN(v) ? 1 : v; });
   const [mute, setMute] = useState(() =>  JSON.parse(localStorage.getItem("localMute")) ?? false);
   const [index, setIndex] = useState(() => Number(localStorage.getItem(`localIndex_${json}`) ?? 0));
   const [dontPlay, setDontPlay] = useState(() => JSON.parse(localStorage.getItem(`localDontPlay_${json}`)) ?? []);
@@ -77,7 +77,7 @@ function Playlists() {
   //============================//
   // UseEffect Backup - fim     //
   //============================//
-  
+
   //============================//
   // APIs - Começo              //
   //============================//
@@ -90,36 +90,38 @@ function Playlists() {
       .catch(err => console.error("Erro ao buscar playlists:", err));
   }, []);
 
-  //Músicas da playlist selecionada
+  // Músicas da playlist selecionada
   useEffect(() => {
     if (!json) return;
-  
-    const playlistKey = `localData_${json}`; //Acessando todo o backup que tiver
 
+    const playlistKey = `localData_${json}`;
+
+    // Acessando todo o backup que tiver
     fetch(`http://localhost:3002/api/json/${encodeURI(json)}`)
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error(res.status);
         return res.json();
       })
-      .then(playlistJson => {
+      .then((playlistJson) => {
         const mus = playlistJson.musicas || [];
-  
+
         setSelectorName(playlistJson.playlist);
         setSelectorUrl(playlistJson.url);
         setBaseData(mus);
-  
+
         const savedRaw = localStorage.getItem(playlistKey);
         const saved = savedRaw ? JSON.parse(savedRaw) : null;
 
         if (Array.isArray(saved) && saved.length > 0) {
           setData(saved);
-        } else { //Playlist Nova sem backup
+        } else {
+          // Playlist nova sem backup
           setData(mus);
           setMusic(mus[0] || {});
           localStorage.setItem(playlistKey, JSON.stringify(mus));
         }
       })
-      .catch(err => console.error("Erro no fetch:", err));
+      .catch((err) => console.error("Erro no fetch:", err));
   }, [json]);
 
   //============================//
@@ -132,13 +134,14 @@ function Playlists() {
 
   const handleSetData = useCallback((newData) => {
     if (!Array.isArray(newData)) return;
-    setData(prev => {
-      const same = prev && prev.length === newData.length && prev.every((p, i) => p.id === newData[i].id); //Compara os arrays par ver se  tem alguma alteração
+  
+    setData((prev) => {
+      const same =prev &&prev.length === newData.length && prev.every((p, i) => p.id === newData[i].id); // Compara os arrays para ver se tem alguma alteração
       if (same) return prev;
       return newData;
     });
-
-    //Limpando os valores da playlist
+  
+    // Limpando os valores da playlist
     setIndex(0);
     setDontPlay([]);
     setQueue([]);
@@ -175,11 +178,11 @@ function Playlists() {
       if (!prev || prev.length === 0) return prev;
       const removedIndex = prev.findIndex(m => m.id === removedId);
       if (removedIndex === -1) return prev;
-      
-      
+
+
       const updated = prev.filter(m => m.id !== removedId); // Cria um array sem a música removida
       localStorage.setItem(`localData_${json}`, JSON.stringify(updated));
-      
+
       let newIndex = index; // usa o index atual
 
       if (updated.length === 0) {
@@ -224,18 +227,18 @@ function Playlists() {
   // Deletando tudo sobre a playlist
   const clearPlaylistState = useCallback((playlistName) => {
     if (!playlistName) return;
-  
+
     // limpa localStorage específico da playlist
     localStorage.removeItem(`localData_${playlistName}`);
     localStorage.removeItem(`localDontPlay_${playlistName}`);
     localStorage.removeItem(`localQueue_${playlistName}`);
     localStorage.removeItem(`localIndex_${playlistName}`);
     localStorage.removeItem(`localCurrentTime_${playlistName}`);
-  
+
     // se for a playlist atualmente selecionada
     if (json === playlistName) {
       localStorage.removeItem("localJson");
-  
+
       setJson("");
       setData([]);
       setBaseData([]);
@@ -251,26 +254,26 @@ function Playlists() {
   // Forçando recarregamento da playlist
   const refreshCurrentPlaylist = useCallback(() => {
     if (!json) return;
-  
+
     setData([]);
     setBaseData([]);
     setDontPlay([]);
     setQueue([]);
     setIndex(0);
-  
+
     localStorage.removeItem(`localData_${json}`);
     localStorage.removeItem(`localDontPlay_${json}`);
     localStorage.removeItem(`localQueue_${json}`);
     localStorage.removeItem(`localIndex_${json}`);
     localStorage.removeItem(`localCurrentTime_${json}`);
-  
+
     // Zera o estado e imediatamente restaura para forçar o useEffect a rodar 2 vezes
     setJson(prev => {
       setTimeout(() => setJson(prev), 0);
       return "";
     });
   }, [json]);
-  
+
   const handleSetVolume = useCallback((v) => setVolume(v), []);
   const handleSetVolumeBkp = useCallback((v) => setVolumeBkp(v), []);
   const handleSetMute = useCallback((b) => setMute(b), []);
@@ -292,7 +295,7 @@ function Playlists() {
     }
     let idx = Math.max(0, Math.min(index, data.length - 1));
     let current = data[idx];
-  
+
     if (!current || dontPlay?.includes(current.id)) {
       const next = nextIndex(idx, "forward");
       if (next === null) {
@@ -304,7 +307,7 @@ function Playlists() {
     }
 
     setMusic(prev => (prev?.id === current.id ? prev : current));
-  }, [index, data, dontPlay, nextIndex]);  
+  }, [index, data, dontPlay, nextIndex]);
 
   // Remove da fila músicas marcadas como dontPlay
   useEffect(() => {
@@ -316,13 +319,13 @@ function Playlists() {
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 768px)");
-  
+
     const handleChange = (e) => {
       setMobileMenu(e.matches ? 1 : 0); //matches true se menor que 768px
     };
-  
+
     media.addEventListener("change", handleChange); //Sempre que a tela mudar
-  
+
     return () => {
       media.removeEventListener("change", handleChange);
     };
@@ -339,13 +342,13 @@ function Playlists() {
       <button className='voltar' onClick={() => navigate("/")}><FaArrowLeft /></button>
 
       {downloadStarted && (
-        <ProgressBox 
+        <ProgressBox
           onSetDownloadStarted={setDownloadStarted}
           onRefreshPlaylist={refreshCurrentPlaylist}
         />
       )}
 
-      <div className="layoutApp"> 
+      <div className="layoutApp">
         {!downloadStarted && (
           <PlaylistsList
             playlists={playlists}
@@ -410,7 +413,7 @@ function Playlists() {
           )}
         </div>
       </div>
-      
+
     </div>
   );
 }

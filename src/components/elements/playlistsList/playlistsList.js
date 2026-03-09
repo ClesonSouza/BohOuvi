@@ -17,7 +17,7 @@ function PlaylistsList({
   const handleSelect = (pl) => {
     onSetJson(pl);
   };
-
+  
   // API - PUT
   async function updatePlaylist(selectorName, selectorUrl) {
     if (!window.confirm(`Tem certeza que deseja atualizar?\nPlaylist: "${selectorName}"\n URL: ${selectorUrl}`)) return;
