@@ -1,10 +1,16 @@
 # BohOuvi
 
-Projeto pessoal focado em criar um **player + downloader de músicas** com **alto nível de customização**.
+Projeto pessoal focado em criar um player + downloader de músicas com alto nível de customização.
 
-Desenvolvi esse projeto para resolver problemas que eu tinha com players de música existentes, que muitas vezes eram **simples demais** ou **não possuíam as funcionalidades que eu procurava**.
+⬇ Download para Windows (versão desktop)
 
-A aplicação utiliza **React no frontend** e **Node.js no backend**.
+https://github.com/ClesonSouza/BohOuvi/releases
+
+### Sobre o projeto
+
+Desenvolvi esse projeto para resolver problemas que eu tinha com players de música existentes, que muitas vezes eram simples demais ou não possuíam as funcionalidades que eu procurava.
+
+A aplicação utiliza React no frontend e Node.js no backend, com empacotamento desktop utilizando Electron.
 
 ![Tela inicial](/public/githubImgs/bohouvi-1.png)
 
